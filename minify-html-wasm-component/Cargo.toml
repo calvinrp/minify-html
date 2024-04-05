@@ -1,0 +1,19 @@
+[package]
+name = "minify-html-wasm-component"
+publish = false
+version = "0.15.0"
+authors = ["Wilson Lin <code@wilsonl.in>"]
+edition = "2021"
+
+[dependencies]
+bitflags = "2.5.0"
+wit-bindgen-rt = "0.24.0"
+minify-html = { path = "../minify-html" }
+
+[lib]
+crate-type = ["cdylib"]
+
+[package.metadata.component]
+package = "component:minify-html-wasm-component"
+
+[package.metadata.component.dependencies]

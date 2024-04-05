@@ -1,0 +1,66 @@
+package wilsonzlin:minify-html;
+
+world minify {
+  export minify-html;
+}
+
+interface minify-html {
+  /// Configuration settings that can be adjusted and passed to a minification function to change the
+  /// minification approach.
+  record config {
+    /// Allow unquoted attribute values in the output to contain characters prohibited by the 
+    /// [WHATWG specification](https://html.spec.whatwg.org/multipage/syntax.html#attributes-2).
+    /// These will still be parsed correctly by almost all browsers.
+    allow-noncompliant-unquoted-attribute-values: bool,
+    /// Allow some minifications around entities that may not pass validation, but will still
+    /// be parsed correctly by almost all browsers.
+    allow-optimal-entities: bool,
+    /// Allow removing spaces between attributes when possible, which may not be spec compliant.
+    /// These will still be parsed correctly by almost all browsers.
+    allow-removing-spaces-between-attributes: bool,
+    /// Do not omit closing tags when possible.
+    keep-closing-tags: bool,
+    /// Keep all comments.
+     keep-comments: bool,
+    /// Do not omit `<html>` and `<head>` opening tags when they don't have attributes.
+    keep-html-and-head-opening-tags: bool,
+    /// Keep `type=text` attribute name and value on `<input>` elements.
+    keep-input-type-text-attr: bool,
+    /// Keep SSI comments.
+    keep-ssi-comments: bool,
+    /// Minify CSS in `<style>` tags and `style` attributes using
+    /// [https://github.com/parcel-bundler/lightningcss](lightningcss).
+    minify-css: bool,
+    /// Minify DOCTYPEs. Minified DOCTYPEs may not be spec compliant, but will still be parsed
+    /// correctly by almost all browsers.
+    minify-doctype: bool,
+    /// Minify JavaScript in `<script>` tags using [minify-js](https://github.com/wilsonzlin/minify-js).
+    minify-js: bool,
+    /// When `{{`, `{#`, or `{%` are seen in content, all source code until the subsequent matching closing
+    /// `}}`, `#}`, or `%}` respectively gets piped through untouched.
+    preserve-brace-template-syntax: bool,
+    /// When `<%` is seen in content, all source code until the subsequent matching closing `%>` gets 
+    /// piped through untouched.
+    preserve-chevron-percent-template-syntax: bool,
+    /// Remove all bangs.
+    remove-bangs: bool,
+    /// Remove all processing instructions.
+    remove-processing-instructions: bool,
+  }
+
+  /// Minifies HTML code.
+  minify-html: func(
+    /// The HTML string to minify.
+    src: string,
+    /// The optional configuration.
+    cfg: option<config>,
+  ) -> string;
+
+  /// Minifies HTML code represented as UTF-8 bytes.
+  minify-html-bytes: func(
+    /// The HTML UTF-8 encoded string to minify.
+    src: list<u8>,
+    /// The optional configuration.
+    cfg: option<config>,
+  ) -> list<u8>;
+}
